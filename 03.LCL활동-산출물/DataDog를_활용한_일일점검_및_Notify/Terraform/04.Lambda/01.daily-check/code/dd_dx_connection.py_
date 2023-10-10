@@ -1,0 +1,69 @@
+import requests
+import datadog_helper
+from pprint import pprint
+
+def check_status(monitor_id):
+    datadog_helper.init_datadog_session( )
+
+    api_key, app_key, public_id = datadog_helper.get_datadog_keys()
+
+    # Set up the Datadog API endpoint
+    url = f"https://api.datadoghq.com/api/v1/monitor/{monitor_id}"
+
+    # Set the headers with the API and application keys
+    headers = {
+        "Content-Type": "application/json",
+        "DD-API-KEY": api_key,
+        "DD-APPLICATION-KEY": app_key,
+    }
+
+    # Send the GET request to retrieve the monitor details
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        monitor_details = response.json()
+        # print(str(monitor_details) + "\n\n")
+        pprint(monitor_details)
+        check_result_detail = monitor_details
+
+        # Extract the monitor status
+        name                   = monitor_details.get("name")
+        priority               = monitor_details.get("priority")
+        overall_state_modified = monitor_details.get("overall_state_modified")
+        overall_state          = monitor_details.get("overall_state")
+
+        # Check if the connection is up or down
+        if overall_state == "OK":
+            print(
+                "# EventName: "
+                + str(name)
+                + "\n"
+                + "# Priority: "
+                + str(priority)
+                + "\n"
+                + "# Status: "
+                + overall_state
+                + "\n"
+                + "# Status Modified: "
+                + overall_state_modified
+                + "\n"
+            )
+            check_result = 'Y'
+        else:
+            print("Please Check the DX connection.")
+            check_result = 'N'
+    else:
+        print("Failed to retrieve monitor details. Check your API keys and monitor ID.")
+        check_result        = 'C'
+        check_result_detail = { }
+
+    return check_result, check_result_detail
+
+if __name__ == "__main__":
+    # Enter the monitor ID associated with the DX connection status monitor
+    monitor_id = "116390058"
+    # Call the function to check the DX connection status
+    check_result, check_result_detail = check_dx_connection_status(monitor_id)
+
+    print(f"check_result[{check_result}]")
+    print(f"check_result_detail[{check_result_detail}]")

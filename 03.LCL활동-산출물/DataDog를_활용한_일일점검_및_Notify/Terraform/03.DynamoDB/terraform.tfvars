@@ -1,0 +1,8 @@
+aws_profile               = "lcl14"
+aws_region                = "ap-northeast-2"
+service_name              = "lcl14"
+environment               = "prd"
+personalinformation       = "no"
+owner                     = "lcl14"
+dynamodb_table_name       = "system_check_argos"
+dynamodb_alert_table_name = "alert_history_argos"

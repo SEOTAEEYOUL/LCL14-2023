@@ -1,0 +1,134 @@
+from urllib.request import Request, urlopen, URLError, HTTPError
+import urllib.request
+import json
+import os
+import logging
+
+import boto3
+from botocore.exceptions import ClientError
+
+
+
+SLACK_WEBHOOK_URL = os.environ.get('SLACK_WEBHOOK_URL')
+SLACK_CHANNEL     = os.environ.get('SLACK_CHANNEL')
+
+slack_mag         = "매우 중요한 알림이 있습니다!"
+
+def send_message_to_slack(text):
+    # url = "https://hooks.slack.com/services/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"
+    url = SLACK_WEBHOOK_URL
+
+    payload = {
+        "username": "L2운영/T Biz Cloud",
+        "channel": SLACK_CHANNEL,
+        "icon_emoji": ":whale:",
+        "text" : text
+    }
+
+    send_text = json.dumps(payload)
+    request   = urllib.request.Request(
+        url, 
+        data = send_text.encode('utf-8'), 
+    )
+    with urllib.request.urlopen(request) as response:
+        slack_message = response.read()
+
+def send_to_slack(message, webhookurl):
+    slack_message = message
+
+    print(f"webhook_url :: {webhookurl}\n{data}")
+    slack_message["username"]   = "L2 운영/AROS_MGNT"
+    slack_message["icon_emoji"] = ":whale:"
+    req = Request(webhookurl, data=json.dumps(slack_message).encode("utf-8"),
+                  headers={'content-type': 'application/json'})
+    try:
+        response = urlopen(req)
+        response.read()
+    except HTTPError as e:
+        print("Request failed : ", e.code, e.reason)
+    except URLError as e:
+        print("Server connection failed: ", e.reason, e.reason)
+
+def lambda_handler(event, context):
+
+    print('## ENVIRONMENT VARIABLES')
+    print(os.environ['AWS_LAMBDA_LOG_GROUP_NAME'])
+    print(os.environ['AWS_LAMBDA_LOG_STREAM_NAME'])
+    print('## EVENT')
+    
+    print(event)
+    print(json.dumps(event, indent=2))
+    print(event['lambda_url'])
+    LAMBDA_URL = event['lambda_url']
+    print(f"LAMBDA_URL[{LAMBDA_URL}] ++++++++++++++")
+    slack_msg = f"매우 중요한 알림이 있습니다! 자세히 알아보려면 <{LAMBDA_URL}|여기를 클릭>하세요."
+
+
+    logging.info(slack_mag)
+    print(slack_msg)
+    send_message_to_slack(slack_msg)
+
+    # Return a response if needed
+    return {
+        'statusCode' : 200,
+        'body': result
+    }
+
+
+
+
+    # # Get the event object
+    # event = event['detail']
+
+    # # Print the event object
+    # print(event)
+
+    # # Get the event parameters
+    # for parameter in event:
+    #     print(parameter, event[parameter])
+
+
+
+    # # Check if the 'detail' key is present in the event
+    # if 'detail' in event:
+    #     # Access the payload using the 'detail' key
+    #     # Extract the payload from the event
+    #     payload = event['detail']
+
+    #     # Print the payload
+    #     print('payload')
+    #     print(json.dumps(payload, indent=2))
+    #     logging.info('payload')
+    #     logging.info(json.dumps(payload, indent=2))
+
+
+
+    #     # Access specific fields within the payload
+    #     if 'lambda_url' in payload:
+    #         # You can access specific fields within the payload as needed
+    #         # Example: Accessing the lambda_url field
+    #         LAMBDA_URL= payload['lambda_url']
+    #         print("Received lambda_url:", lambda_url_)
+    #         LAMBDA_URL = lambda_url_
+
+
+    #         result = f'<H1>Lambda에서 Slack으로 보내는 메시지 입니다.! </H1> </br> <H2> 자세히 알아보려면 <a href="{LAMBDA_URL}"> 여기를 클릭</a> 하세요.</H2>'
+    #         slack_msg = f"매우 중요한 알림이 있습니다! 자세히 알아보려면 <{LAMBDA_URL}|여기를 클릭>하세요."
+    #     else:
+    #         result = f'<H1>Lambda에서 Slack으로 보내는 메시지 입니다.! </H1>'
+    #         slack_msg = f"매우 중요한 알림이 있습니다!"
+
+    #     # Return a response if needed
+    #     return {
+    #         'statusCode' : 200,
+    #         'body': result
+    #     }
+
+    # logging.info(slack_mag)
+    # print(slack_msg)
+    # send_message_to_slack(slack_msg)
+
+if __name__ == "__main__":
+  LAMBDA_URL        = os.environ.get('LAMBDA_URL')
+  send_message_to_slack(f"매우 중요한 알림이 있습니다! 자세히 알아보려면 <{LAMBDA_URL}|여기를 클릭>하세요.")
+

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check System Report</title>
+    <meta charset="utf-8">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-table th {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .custom-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+
+
+        table.type03 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+            border-top: 1px solid #ccc;
+            border-left: 3px solid #369;
+            margin : 20px 10px;
+        }
+        table.type03 th {
+            width: 147px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            color: #153d73;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        table.type03 td {
+            width: 349px;
+            padding: 10px;
+            vertical-align: top;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        table.type08 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+            border-left: 1px solid #ccc;
+            margin: 20px 10px;
+        }
+
+        table.type08 thead th {
+            padding: 10px;
+            font-weight: bold;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-bottom: 2px solid #c00;
+            background: #dcdcd1;
+        }
+        table.type08 tbody th {
+            width: 150px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            background: #ececec;
+        }
+        table.type08 td {
+            width: 350px;
+            padding: 10px;
+            vertical-align: top;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        table.type09 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+
+        }
+        table.type09 thead th {
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            color: #369;
+            border-bottom: 3px solid #036;
+        }
+        table.type09 tbody th {
+            width: 150px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            border-bottom: 1px solid #ccc;
+            background: #f3f6f7;
+        }
+        table.type09 td {
+            width: 350px;
+            padding: 10px;
+            vertical-align: top;
+            border-bottom: 1px solid #ccc;
+        }
+        .detail {
+            display: none; /* 상세 정보 숨김 */
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+    
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);            
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: Arial, sans-serif;
+            font-weight: 300;
+            font-size: 0.8em;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <h1> {{timestamp}} - {{title}} </h1>
+
+    <h2> {{subtitle}} </h2>
+    {{table_content}}
+    
+    <table class="type09">
+        <thead>
+            <tr>
+                <th scope="cols">No.</th>
+                <th scope="cols">Resource ID </th>
+                <th scope="cols">Check DTM</th>
+                <th scope="cols">Check Result</th>
+                <th scope="cols">Check Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <th>CONTAINER-DAEMONSET-01</th>
+                <td> 2023070614 </td>
+                <td> OK </td>
+                <td> 
+                    <div class="item">
+                        <h4 class="tooltip">상세보기
+                            <span class="tooltiptext">
+                            {
+                                "id": 119678033,
+                                "org_id": 708429,
+                                "type": "query alert",
+                                "name": "[P1][SYSTEM] {{name.name}} - EC2 instance status failed",
+                                "message": "@slack-skshieldusnextossdev-prd\uc54c\ub78c @slack-SKCC_Digital_Service-ict_shieldus_argos_l1",
+                                "tags": [
+                                  "team:skcc",
+                                  "EC2"
+                                ],
+                                "query": "avg(last_5m):avg:aws.ec2.status_check_failed_instance{!name:sksh-argos-p-eks*} by {name} > 0",
+                                "options": {
+                                  "thresholds": {
+                                    "critical": 0.0
+                                  },
+                                  "notify_audit": false,
+                                  "require_full_window": false,
+                                  "notify_no_data": false,
+                                  "renotify_interval": 0,
+                                  "include_tags": true,
+                                  "evaluation_delay": 900,
+                                  "new_group_delay": 60,
+                                  "notification_preset_name": "hide_query",
+                                  "silenced": {}
+                                },
+                                "multi": true,
+                                "created_at": 1684730348000,
+                                "created": "2023-05-22T04:39:08.639033+00:00",
+                                "modified": "2023-07-05T04:07:27.455083+00:00",
+                                "deleted": null,
+                                "restricted_roles": null,
+                                "priority": 1,
+                                "overall_state_modified": "2023-07-03T09:24:54+00:00",
+                                "overall_state": "OK",
+                                "creator": {
+                                  "name": null,
+                                  "handle": "taeeyoul@sk.com",
+                                  "email": "taeeyoul@sk.com",
+                                  "id": 4490448
+                                }
+                            }
+                            </span>
+                        </h4>
+                        </div>
+                      </div>
+                </td>                
+            </tr>
+        </tbody>
+    </table>
+<!-- JavaScript 코드 -->
+<script>
+    // 모든 항목의 제목에 클릭 이벤트 추가
+    var items = document.querySelectorAll('.item');
+    items.forEach(function(item) {
+        var title = item.querySelector('h4');
+        title.addEventListener('click', function(event) {
+            var detail = item.querySelector('.detail');
+            var tooltip = item.querySelector('.tooltiptext');
+
+            // 풍선 도움말의 위치를 초기화합니다.
+            tooltip.style.left = '0';
+            tooltip.style.top = '0';
+
+            // 풍선 도움말의 크기를 가져옵니다.
+            var tooltipWidth = tooltip.offsetWidth;
+            var tooltipHeight = tooltip.offsetHeight;
+
+            // 마우스 포인터의 위치를 가져옵니다.
+            var mouseX = event.pageX;
+            var mouseY = event.pageY;
+
+            // 화면의 가로 크기와 세로 크기를 가져옵니다.
+            var screenWidth = window.innerWidth;
+            var screenHeight = window.innerHeight;
+
+            // 풍선 도움말이 화면 오른쪽에 나타날 경우 위치를 조정합니다.
+            if (mouseX + tooltipWidth > screenWidth) {
+                tooltip.style.left = (screenWidth - tooltipWidth) + 'px';
+            }
+            else {
+                tooltip.style.left = mouseX + 'px';
+            }
+
+            // 풍선 도움말이 화면 아래쪽에 나타날 경우 위치를 조정합니다.
+            if (mouseY + tooltipHeight > screenHeight) {
+                tooltip.style.top = (mouseY - tooltipHeight) + 'px';
+            }
+            else {
+                tooltip.style.top = mouseY + 'px';
+            }
+
+            tooltip.style.visibility = 'visible'; // 풍선 도움말 보이기
+        });
+    });
+
+    // 마우스 클릭 이벤트를 감지하여 풍선 도움말 숨기기
+    window.addEventListener('click', function(event) {
+        var tooltips = document.querySelectorAll('.tooltiptext');
+        tooltips.forEach(function(tooltip) {
+            tooltip.style.visibility = 'hidden'; // 풍선 도움말 숨기기
+        });
+    });
+</script>
+
+</body>
+</html>

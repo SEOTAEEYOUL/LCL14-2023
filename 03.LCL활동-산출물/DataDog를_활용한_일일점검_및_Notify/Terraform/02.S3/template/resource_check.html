@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>자원 점검 결과</title>
+    <link rel="icon" href="{{s3_title_icon_url}}" type="image/png">
+    <meta charset="utf-8">
+    <style>
+        body {
+            margin-top : 20px ;
+            /* margin: 0;
+            padding: 0;
+            background: url('{{s3_aws_logo_url}}') no-repeat center center fixed; */
+            /* 배경 이미지 크기를 브라우저에 맞게 조정 */
+            background-image: url('{{s3_aws_logo_url}}');
+            /* background-size: cover; */
+            /* background-position: center; */
+            background-repeat: no-repeat;
+            /* backgroud-size: 50% 50%; */
+            /* background-size: auto; */
+            background-size: cotain; 
+            /* margin: 0;
+            padding: 0; */
+            /* height: 100vh; */
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-table th {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .custom-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        h1 {
+            color: white;
+            background-color: deepskyblue;
+            font-size: 2em;
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        .error {
+            color: darkred;
+            font-weight: bold;
+        }
+        .success {
+            color: darkgreen;
+            font-weight: bold;
+        }
+        .notok {
+            color: darkred;
+            font-weight: bold;
+        }
+        .ok {
+            color: darkgreen;
+            font-weight: bold;
+        }
+        .red {
+            color: red;
+            font-weight: bold;
+        }
+        .orange {
+            color: orange;
+            font-weight: bold;
+        }
+        .blue {
+            color: deepskyblue;
+            font-weight: bold;
+        }
+        .green {
+            color: olive;
+            font-weight: bold;
+        }
+        .gray {
+            color: darkgray;
+            font-weight: bold;
+        }
+        .fixed-font {
+            font-family: 'Arial', sans-serif; /* 폰트 설정 (필요에 따라 변경 가능) */
+            font-size: 10px; 폰트 크기 설정 (필요에 따라 변경 가능)
+            line-height: 1.5; /* 줄 간격 설정 (필요에 따라 변경 가능) */
+            letter-spacing: 0.2em; /* 글자 간격 설정 (필요에 따라 변경 가능) */
+        }
+    </style>
+</head>
+<body>
+    <h1>자원 '{{monitor_id}}' 점검 결과 - {{date}}</h1>
+    
+    {{table_content}}
+</body>
+</html>

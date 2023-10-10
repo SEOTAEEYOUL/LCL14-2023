@@ -1,0 +1,11 @@
+python-dotenv
+# requests==2.28.2
+# requests==2.25.0
+requests==2.28.2
+# requests
+# urllib3==1.16
+urllib3==1.26.15
+# urllib3
+datadog
+datadog-api-client
+boto3==1.26.110

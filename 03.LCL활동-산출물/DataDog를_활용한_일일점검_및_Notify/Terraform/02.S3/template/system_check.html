@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <link rel="icon" href="{{s3_title_icon_url}}" type="image/png">
+    <meta charset="utf-8">
+    <style>
+        body {
+            margin-top : 20px ;
+            /* margin: 0;
+            padding: 0;
+            background: url('{{s3_aws_logo_url}}') no-repeat center center fixed; */
+            /* 배경 이미지 크기를 브라우저에 맞게 조정 */
+            background-image: url('{{s3_aws_logo_url}}');
+            /* background-size: cover; */
+            /* background-position: center; */
+            background-repeat: no-repeat;
+            /* backgroud-size: 50% 50%; */
+            /* background-size: auto; */
+            background-size: cotain; 
+            /* margin: 0;
+            padding: 0; */
+            /* height: 100vh; */
+            /* display: flex;
+            align-items: center;
+            justify-content: center; */
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-table th {
+            background-color: #f2f2f2;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .custom-table td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+
+
+        table.type03 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+            border-top: 1px solid #ccc;
+            border-left: 3px solid #369;
+            margin : 20px 10px;
+        }
+        table.type03 th {
+            width: 147px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            color: #153d73;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        table.type03 td {
+            width: 349px;
+            padding: 10px;
+            vertical-align: top;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+
+        table.type08 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+            border-left: 1px solid #ccc;
+            margin: 20px 10px;
+        }
+
+        table.type08 thead th {
+            padding: 10px;
+            font-weight: bold;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-bottom: 2px solid #c00;
+            background: #dcdcd1;
+        }
+        table.type08 tbody th {
+            width: 150px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            background: #ececec;
+        }
+        table.type08 td {
+            width: 350px;
+            padding: 10px;
+            vertical-align: top;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        table.type09 {
+            border-collapse: collapse;
+            text-align: left;
+            line-height: 1.5;
+
+        }
+        table.type09 thead th {
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            color: #369;
+            border-bottom: 3px solid #036;
+        }
+        table.type09 tbody th {
+            width: 150px;
+            padding: 10px;
+            font-weight: bold;
+            vertical-align: top;
+            border-bottom: 1px solid #ccc;
+            background: #f3f6f7;
+        }
+        table.type09 td {
+            width: 350px;
+            padding: 10px;
+            vertical-align: top;
+            border-bottom: 1px solid #ccc;
+        }
+        .detail {
+            display: none; /* 상세 정보 숨김 */
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+    
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 300px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);            
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-family: Arial, sans-serif;
+            font-weight: 300;
+            font-size: 0.8em;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        /* a 태그에 스타일을 적용합니다. */
+        a {
+            display: inline-block; /* 링크를 블럭 요소로 변경합니다. */
+            background-color: Olive; /* 회색 배경 색상을 설정합니다. */
+            color: white; /* 텍스트 색상을 흰색으로 설정합니다. */
+            padding: 10px; /* 내부 여백을 설정합니다. */
+            text-decoration: none; /* 링크의 밑줄을 제거합니다. */
+        }
+        /* 링크에 마우스를 올렸을 때의 스타일을 정의합니다. */
+        a:hover::after {
+            content: "여기를 누르면 상세를 볼 수 있습니다."; /* tooltip 내용을 설정합니다. */
+            position: absolute; /* 절대적인 위치로 설정합니다. */
+            background-color: black; /* tooltip의 배경 색상을 설정합니다. */
+            color: white; /* tooltip의 텍스트 색상을 설정합니다. */
+            padding: 5px; /* tooltip의 내부 여백을 설정합니다. */
+            border-radius: 5px; /* tooltip의 테두리 반경을 설정합니다. */
+            font-size: 14px; /* tooltip의 글꼴 크기를 설정합니다. */
+            z-index: 1; /* tooltip을 다른 요소 위에 표시합니다. */
+        }
+        h1 {
+            color: white;
+            background-color: deepskyblue;
+            font-size: 2em;
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        .error {
+            color: darkred;
+            font-weight: bold;
+        }
+        .success {
+            color: darkgreen;
+            font-weight: bold;
+        }
+        .notok {
+            color: darkred;
+            font-weight: bold;
+        }
+        .ok {
+            color: darkgreen;
+            font-weight: bold;
+        }
+        .red {
+            color: red;
+            font-weight: bold;
+        }
+        .orange {
+            color: orange;
+            font-weight: bold;
+        }
+        .blue {
+            color: deepskyblue;
+            font-weight: bold;
+        }
+        .green {
+            color: olive;
+            font-weight: bold;
+        }
+        .gray {
+            color: darkgray;
+            font-weight: bold;
+        }
+        .fixed-font {
+            font-family: 'Arial', sans-serif; /* 폰트 설정 (필요에 따라 변경 가능) */
+            font-size: 10px; 폰트 크기 설정 (필요에 따라 변경 가능)
+            line-height: 1.5; /* 줄 간격 설정 (필요에 따라 변경 가능) */
+            letter-spacing: 0.2em; /* 글자 간격 설정 (필요에 따라 변경 가능) */
+        }
+    </style>
+</head>
+<body>
+    <h1> {{title}} - {{timestamp}} </h1>
+
+    <h2> {{subtitle}} </h2>
+    {{table_content}}
+    <!-- JavaScript 코드 -->
+    <script>
+        // 모든 항목의 제목에 클릭 이벤트 추가
+        var items = document.querySelectorAll('.item');
+        items.forEach(function(item) {
+            var title = item.querySelector('h4');
+            title.addEventListener('click', function(event) {
+                var detail = item.querySelector('.detail');
+                var tooltip = item.querySelector('.tooltiptext');
+
+                // 풍선 도움말의 위치를 초기화합니다.
+                tooltip.style.left = '0';
+                tooltip.style.top = '0';
+
+                // 풍선 도움말의 크기를 가져옵니다.
+                var tooltipWidth = tooltip.offsetWidth;
+                var tooltipHeight = tooltip.offsetHeight;
+
+                // 마우스 포인터의 위치를 가져옵니다.
+                var mouseX = event.pageX;
+                var mouseY = event.pageY;
+
+                // 화면의 가로 크기와 세로 크기를 가져옵니다.
+                var screenWidth = window.innerWidth;
+                var screenHeight = window.innerHeight;
+
+                // 풍선 도움말이 화면 오른쪽에 나타날 경우 위치를 조정합니다.
+                if (mouseX + tooltipWidth > screenWidth) {
+                    tooltip.style.left = (screenWidth - tooltipWidth) + 'px';
+                }
+                else {
+                    tooltip.style.left = mouseX + 'px';
+                }
+
+                // 풍선 도움말이 화면 아래쪽에 나타날 경우 위치를 조정합니다.
+                if (mouseY + tooltipHeight > screenHeight) {
+                    tooltip.style.top = (mouseY - tooltipHeight) + 'px';
+                }
+                else {
+                    tooltip.style.top = mouseY + 'px';
+                }
+
+                tooltip.style.visibility = 'visible'; // 풍선 도움말 보이기
+            });
+        });
+
+        // 마우스 클릭 이벤트를 감지하여 풍선 도움말 숨기기
+        window.addEventListener('click', function(event) {
+            var tooltips = document.querySelectorAll('.tooltiptext');
+            tooltips.forEach(function(tooltip) {
+                tooltip.style.visibility = 'hidden'; // 풍선 도움말 숨기기
+            });
+        });
+    </script>
+
+</body>
+</html>

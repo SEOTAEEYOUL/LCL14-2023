@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('{{s3_aws_logo_url}}') no-repeat center center fixed;
+            /* 배경 이미지 크기를 브라우저에 맞게 조정 */
+            background-size: cover;
+        }
+        .detail {
+        display: none; /* 상세 정보 숨김 */
+        }
+    </style>
+</head>
+<body>
+    <div class="item">
+        <h3>항목 1</h3>
+        <div class="detail">
+        <p>항목 1의 상세 정보입니다.</p>
+        </div>
+    </div>
+    
+    <div class="item">
+        <h3>항목 2</h3>
+        <div class="detail">
+        <p>항목 2의 상세 정보입니다.</p>
+        </div>
+    </div>
+  
+    <!-- JavaScript 코드 -->
+    <script>
+        // 모든 항목의 제목에 클릭 이벤트 추가
+        var items = document.querySelectorAll('.item');
+        items.forEach(function(item) {
+            var title = item.querySelector('h3');
+            title.addEventListener('click', function() {
+                var detail = item.querySelector('.detail');
+                
+                if (detail.style.display === 'none') {
+                    detail.style.display = 'block'; // 상세 정보 보이기
+                }
+                else {
+                    detail.style.display = 'none'; // 상세 정보 숨김
+                }
+            });
+        });
+    </script>
+</body>
+</html>
